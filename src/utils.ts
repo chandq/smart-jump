@@ -63,9 +63,11 @@ const rootPath = function (
   let len = arr.length;
   let base = '';
   for (let index = 0; index < len; index++) {
-    let z = fs.existsSync(path.join(...arr, rootfile));
+    let z = fs.existsSync(
+      path.join(process.platform === 'win32' ? '' : '/', ...arr, rootfile)
+    );
     if (z) {
-      base = path.join(...arr);
+      base = path.join(process.platform === 'win32' ? '' : '/', ...arr);
       memento.update('rootList', [...rootList, base]);
       return base;
     } else {
