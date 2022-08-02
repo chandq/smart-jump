@@ -23,10 +23,16 @@ const screeningPath = function (
     const i = linetext.indexOf(text);
     const columns = [i, i + text.length];
     let [key, ...m] = text.split('/');
-    if (mappings.hasOwnProperty(key)) {
-      let e = mappings[key];
+    // 判断配置的别名是否斜杠开始
+    const isStartwithSlash = text.startsWith('/');
+    const guessAlias = isStartwithSlash ? '/' + m[0] : key;
+    if (mappings.hasOwnProperty(guessAlias)) {
+      let e = mappings[guessAlias];
       if (e[0] === '/') {
         e = e.substring(1);
+      }
+      if (isStartwithSlash) {
+        m.shift();
       }
       return {
         path: path.join(e, ...m),
