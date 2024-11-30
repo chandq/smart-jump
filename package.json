@@ -1,8 +1,9 @@
 {
   "name": "smart-jump",
-  "displayName": "smart-jump",
-  "description": "别名路径跳转插件，支持任何项目，可以自由配置映射规则，自由配置可缺省后缀名列表",
-  "version": "0.0.4",
+  "private": true,
+  "displayName": "Smart Jump",
+  "description": "别名路径智能跳转插件，支持任何项目，可以自由配置映射规则、缺省后缀名，支持 windows、macOS、Linux 等任意平台",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.30.0"
   },
@@ -15,10 +16,10 @@
   "keywords": [
     "alias",
     "vue",
-    "webpack",
     "文件路径智能跳转",
     "smart-jump",
-    "react"
+    "Smart Jump",
+    "vscode-plugin"
   ],
   "publisher": "deqiaochen",
   "categories": [
