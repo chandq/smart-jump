@@ -3,7 +3,7 @@
   "private": true,
   "displayName": "Smart Jump",
   "description": "别名路径智能跳转插件，支持任何项目，可以自由配置映射规则、缺省后缀名，支持 windows、macOS、Linux 等任意平台",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.30.0"
   },
