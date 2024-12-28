@@ -40,7 +40,7 @@
           "default": {
             "@": "/src"
           },
-          "description": "路径映射，例如{'@':'/src','components':'/src/components'}，/表示项目根目录"
+          "description": "路径映射，例如{'@':'/src','@components':'/src/components'}，/表示项目根目录"
         },
         "smart-jump.rootpath": {
           "type": "string",

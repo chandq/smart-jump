@@ -9,29 +9,37 @@ const {
 
 /**
  * 从文本中过滤出路径
- * @param {string} linetext 包含路径的字符串
+ * @param {string} rawLineText 包含路径的字符串
+ * @param {vscode.Position} position 位置
  * @returns 目标路径
  */
 const screeningPath = function (
-  linetext: string,
+  rawLineText: string,
   position: vscode.Position
 ): any {
+
+  // 移除异步路由中的注释, 移除以下/**/内容
+  // e.g. component: () => import(/* webpackChunkName: "test" */ '@/views/test-func/index.vue')
+  const lineText = rawLineText.replace(/\/\*.*\*\//g, '');
   let c = /('.+')|(".+")/;
-  let arr = linetext.match(c);
+  let arr = lineText.match(c);
   if (arr) {
     let text = arr[0].substring(1, arr[0].length - 1);
-    const i = linetext.indexOf(text);
-    const columns = [i, i + text.length];
+    const i = lineText.indexOf(text);
+    const columns = [
+      i,
+      i + text.length + (rawLineText.length - lineText.length),
+    ];
     let [key, ...m] = text.split('/');
     // 判断配置的别名是否斜杠开始
-    const isStartwithSlash = text.startsWith('/');
-    const guessAlias = isStartwithSlash ? '/' + m[0] : key;
+    const isStartsWithSlash = text.startsWith('/');
+    const guessAlias = isStartsWithSlash ? '/' + m[0] : key;
     if (mappings.hasOwnProperty(guessAlias)) {
       let e = mappings[guessAlias];
       if (e[0] === '/') {
         e = e.substring(1);
       }
-      if (isStartwithSlash) {
+      if (isStartsWithSlash) {
         m.shift();
       }
       return {

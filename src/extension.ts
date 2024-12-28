@@ -3,7 +3,7 @@ import { screeningPath, rootPath, joiningSuffix, screeningRelativePath } from '.
 const path = require('path')
 
 const activate = function (context: vscode.ExtensionContext) {
-  const hoverHander = vscode.languages.registerDefinitionProvider([
+  const hoverHandler = vscode.languages.registerDefinitionProvider([
     { scheme: 'file', language: 'vue' },
     { scheme: 'file', language: 'scss' },
     { scheme: 'file', language: 'css' },
@@ -15,10 +15,10 @@ const activate = function (context: vscode.ExtensionContext) {
     provideDefinition(document, position, token) {
       const fileName = document.fileName; // 当前文件的绝对路径加文件名
       const workDir = path.dirname(fileName); // 当前文件的绝对路径
-      const linetext = document.lineAt(position).text; // 当前行字符串
-      const q = screeningPath(linetext, position) // 路由别名目标路径
+      const lineText = document.lineAt(position).text; // 当前行字符串
+      const q = screeningPath(lineText, position) // 路由别名目标路径
       const z = rootPath(workDir, context) // 项目根目录
-      const u = screeningRelativePath(linetext,position) // 相对路径的目标路径
+      const u = screeningRelativePath(lineText, position) // 相对路径的目标路径
       let targetPath = '' // 要跳转的目标路径
       let isPathInterior = false
       let target = q
@@ -36,14 +36,14 @@ const activate = function (context: vscode.ExtensionContext) {
       return [
         {
           originSelectionRange: target.rang,
-          targetRange: new vscode.Range(0,0,0,0),
+          targetRange: new vscode.Range(0, 0, 0, 0),
           // targetSelectionRange: new vscode.Range(0,0,0,10),
           targetUri: vscode.Uri.file(k)
         }
       ]
     },
   })
-  context.subscriptions.push(hoverHander)
+  context.subscriptions.push(hoverHandler)
 }
 
 const deactivate = function () {
