@@ -20,11 +20,21 @@ const screeningPath = function (
 
   // 移除异步路由中的注释, 移除以下/**/内容
   // e.g. component: () => import(/* webpackChunkName: "test" */ '@/views/test-func/index.vue')
-  const lineText = rawLineText.replace(/\/\*.*\*\//g, '');
-  let c = /('.+')|(".+")/;
-  let arr = lineText.match(c);
-  if (arr) {
-    let text = arr[0].substring(1, arr[0].length - 1);
+  const removedCommentText = rawLineText.replace(/\/\*.*\*\//g, '');
+  let findAlias = ''
+  for (const key in mappings) {
+    if (removedCommentText.includes(key)) {
+      findAlias = key;
+    }
+  }
+  if (!findAlias) {
+    return '';
+  }
+  const lineTextMatch = removedCommentText.match(new RegExp(`${findAlias}([^'"]*)`, 'g'))
+  if (Array.isArray(lineTextMatch) && lineTextMatch.length > 0) {
+    const lineText = lineTextMatch[0]
+    let text = lineTextMatch[0];
+
     const i = lineText.indexOf(text);
     const columns = [
       i,
